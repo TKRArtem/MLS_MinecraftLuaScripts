@@ -18,7 +18,7 @@ This framework is not designed to replace or cheat the Minecraft experience. Ins
  - Minigame Designers: Build intricate, automated minigames with custom rules, triggers, and actions.
  - Lua Enthusiasts: Whether you're a beginner or experienced, use the power of Lua scripting to build your own automation and systems.
 ### **Explore, experiment, and see how the Minecraft Lua Scripts Framework can transform your world!**
-### For additional information, please refer to the [**Wiki**](../../wiki) or the [project site](https://tkrartem.github.io/MLS_MinecraftLuaScripts/).
+### For additional information, please refer to the [**Wiki**](../../wiki).
 ## 
 ### WARNING
 This project is currently in its **ALPHA** stage, meaning it may contain bugs or incomplete features. If you encounter any issues, please report them via the `Issues` tab on GitHub.
