@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Lua Scripts API - 0.3-ALPHA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background: #0078d7;
+            color: white;
+            padding: 1rem 2rem;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        nav {
+            padding: 1rem 2rem;
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 1rem;
+        }
+        nav a {
+            color: #0078d7;
+            text-decoration: none;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            padding: 2rem;
+        }
+        .section {
+            flex: 1 1 calc(50% - 2rem);
+            background: white;
+            padding: 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .section h2 {
+            margin-top: 0;
+            color: #0078d7;
+        }
+        code {
+            display: block;
+            background: #f4f4f9;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Consolas', monospace;
+        }
+        pre {
+            display: block;
+            background: #f4f4f9;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Consolas', monospace;
+        }
+        .inline-code {
+            background: #f4f4f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            white-space: nowrap;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem 2rem;
+            background: #333;
+            color: white;
+            margin-top: 2rem;
+        }
+        a {
+            color: #0078d7;
+        }
+        .inline {
+            display: inline;
+            margin: 0;
+        }
+    </style>
+    <style>
+        .api-function {
+            padding: 5px 0px 5px 10px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            font-family: Arial, sans-serif;
+        }
+
+        .api-function-desc {
+            padding-left: 20px;
+        }
+
+        .api-function h3 {
+            font-size: 16px;
+            margin: 0 0 5px;
+            color: #2e6b9e;
+        }
+
+        .api-function p, .api-function h4 {
+            font-size: 14px;
+            color: #555;
+            margin: 0 0 5px;
+        }
+
+        .api-function ul {
+            padding-left: 15px;
+            list-style-type: none;
+            margin: 0;
+        }
+
+        .api-function li {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .api-function strong {
+            font-weight: bold;
+        }
+
+        .api-function em {
+            font-size: 14px;
+            font-style: italic;
+            color: #777;
+        }
+
+        .api-function em a {
+            font-size: 14px;
+            font-style: italic;
+            color: #777;
+            text-decoration: underline;
+        }
+
+        .api-field em {
+            font-size: 14px;
+            font-style: italic;
+            color: #777;
+        }
+
+        .api-field em a {
+            font-size: 14px;
+            font-style: italic;
+            color: #777;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Minecraft Lua Scripts API - 0.3-ALPHA</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#commands">Commands</a></li>
+        <li><a href="#scripting">Lua Scripting</a></li>
+        <li><a href="#classes">Classes</a></li>
+        <li><a href="#examples">Examples</a></li>
+    </ul>
+</nav>
+
+<main class="container">
+    <section id="introduction" class="section">
+        <h2>Introduction</h2>
+        <p>Welcome to the Minecraft Lua Scripts Framework! This mod provides a Lua-based scripting environment that enables players to automate tasks and create custom systems in Minecraft. Whether you're working on a new map, managing a server, or designing your own minigames, this framework gives you the flexibility to create dynamic, interactive experiences without the limitations of vanilla gameplay.</p>
+        <h3 style="margin-bottom: 0px;">Key Features:</h3>
+        <ul style="margin-top: 0px;">
+            <li><b>Enhance Map Creation:</b> Add complex, automated systems and behaviors to your maps—perfect for custom adventures, puzzles, and challenges.</li>
+            <li><b>Server Management:</b> Automate server maintenance tasks such as player teleportation, dynamic permissions adjustment, event-triggered actions, and in-game announcements.</li>
+            <li><b>Create Custom Minigames:</b> Build unique minigames that feature automated triggers, events, and actions, all controlled by scripts.</li>
+        </ul>
+        <h3 style="margin-bottom: 0px;">Why Lua?</h3>
+        <p style="margin-top: 0px;">Lua is lightweight, flexible, and user-friendly, making it ideal for adding custom automation without bogging down performance. It offers a perfect balance for both beginners and experienced users—whether you're just starting out or designing sophisticated systems, Lua gives you the power to shape your Minecraft experience.</p>
+        <h3 style="margin-bottom: 0px;">What this Mod is NOT:</h3>
+        <p style="margin-top: 0px;">This framework is not designed to replace or cheat the Minecraft experience. Instead, it enhances the gameplay by adding new layers of interaction and automation, perfect for players who want to customize and streamline their in-game tasks.</p>
+        <h3 style="margin-bottom: 0px;">Who Is This For?</h3>
+        <ul style="margin-top: 0px;">
+            <li><b>Map Creators:</b> Add dynamic elements, automate puzzle mechanics, or control events in your maps without the constraints of redstone.</li>
+            <li><b>Server Owners:</b> Automate management tasks, player interactions, and world features to keep your server running smoothly.</li>
+            <li><b>Minigame Designers:</b> Build intricate, automated minigames with custom rules, triggers, and actions.</li>
+            <li><b>Lua Enthusiasts:</b> Whether you're a beginner or experienced, use the power of Lua scripting to build your own automation and systems.</li>
+        </ul>
+        <p>Explore, experiment, and see how the Minecraft Lua Scripts Framework can transform your world!</p>
+    </section>
+
+    <section id="commands" class="section">
+        <h2>Commands</h2>
+        <p>Your scripts are located in the <span class="inline-code">luascripts</span> folder within your game directory.</p>
+        <p>The Minecraft command used to launch your scripts is: <span class="inline-code">/script</span></b></p>
+        <h3><span class="inline-code">/script</span> Command Usage:</h3>
+        <ul>
+            <p><span class="inline-code">/script run &lt;filepath&gt; &lt;threadName&gt;</span> — Executes the specified script, where &lt;filepath&gt; is the relative path to your script file (with the "luascripts" folder as the root), and &lt;threadName&gt; is the name used to reference the script's running thread.</p>
+            <p><span class="inline-code">/script stop &lt;threadName&gt;</span> — Stops the specified thread, where &lt;threadName&gt; is the name of the running thread you want to stop.</p>
+            <p><span class="inline-code">/script stop all</span> — Stops all running threads.</p>
+            <p><span class="inline-code">/script list</span> — Lists all active threads.</p>
+        </ul>
+    </section>
+
+    <section id="scripting" class="section">
+        <h2>Lua Scripting</h2>
+        <h3>Environment Variables</h3>
+        <p style="margin-bottom: 0px;">Each script executed via command is provided with the following built-in variables:</p>
+        <ul style="margin-top: 0px;" class="api-field">
+            <li><b><i>server</i></b> (<em><a href="#server">Server</a></em>) - Represents the server instance.</li>
+            <li><b><i>world</i></b> (<em><a href="#world">World</a></em> or <em>nil</em>) - The world instance from which the script is triggered.</li>
+            <li><b><i>entity</i></b> (<em><a href="#entity">Entity</a></em> or <em>nil</em>) - The entity that initiated the script.</li>
+            <li><b><i>position</i></b> (<em><a href="#blockpos">BlockPos</a></em> or <em>nil</em>) - The position at which the script is executed.</li>
+        </ul>
+
+        <h3>MLS-Specific Rules</h3>
+
+        <h4>Function Calls</h4>
+        <p><b>IMPORTANT</b>: When calling methods on objects in the MLS framework, always use the dot (.) notation, not the colon (:) notation.</p>
+        <pre><span style="color: #008000;">-- CORRECT way to call methods</span>
+<span style="color: #000000;">world</span><span style="color: #800080;">.</span><span style="color: #000000;">executeCommand</span><span style="color: #800080;">(</span><span style="color: #A31515;">"time set day"</span><span style="color: #800080;">)</span>
+<span style="color: #0000FF;">local</span> <span style="color: #000000;">pos</span> <span style="color: #800080;">=</span> <span style="color: #000000;">entity</span><span style="color: #800080;">.</span><span style="color: #000000;">getPosition</span><span style="color: #800080;">(</span><span style="color: #800080;">)</span>
+
+<span style="color: #008000;">-- INCORRECT way (will cause errors)</span>
+<span style="color: #008000;">-- world:executeCommand("time set day")</span>
+<span style="color: #008000;">-- local pos = entity:getPosition()</span></pre>
+
+        <h4>Timing and Delays</h4>
+        <p>To create delays in your scripts, use os.time() to measure elapsed time:</p>
+        <pre style="background-color: #f8f8f8; padding: 10px; border-radius: 5px;"><span style="color: #008000;">-- Basic timer script for a 10 second countdown</span>
+<span style="color: #0000FF;">local</span> <span style="color: #000000;">endTime</span> <span style="color: #800080;">=</span> <span style="color: #000000;">os</span><span style="color: #800080;">.</span><span style="color: #000000;">time</span><span style="color: #800080;">(</span><span style="color: #800080;">)</span> <span style="color: #800080;">+</span> <span style="color: #098658;">10</span>
+<span style="color: #0000FF;">local</span> <span style="color: #000000;">lastSecond</span> <span style="color: #800080;">=</span> <span style="color: #098658;">10</span>
+
+<span style="color: #0000FF;">while</span> <span style="color: #000000;">os</span><span style="color: #800080;">.</span><span style="color: #000000;">time</span><span style="color: #800080;">(</span><span style="color: #800080;">)</span> <span style="color: #800080;">&lt;</span> <span style="color: #000000;">endTime</span> <span style="color: #0000FF;">do</span>
+    <span style="color: #0000FF;">local</span> <span style="color: #000000;">remainingSeconds</span> <span style="color: #800080;">=</span> <span style="color: #000000;">endTime</span> <span style="color: #800080;">-</span> <span style="color: #000000;">os</span><span style="color: #800080;">.</span><span style="color: #000000;">time</span><span style="color: #800080;">(</span><span style="color: #800080;">)</span>
+    
+    <span style="color: #0000FF;">if</span> <span style="color: #000000;">remainingSeconds</span> <span style="color: #800080;">&lt;</span> <span style="color: #000000;">lastSecond</span> <span style="color: #0000FF;">then</span>
+        <span style="color: #000000;">lastSecond</span> <span style="color: #800080;">=</span> <span style="color: #000000;">remainingSeconds</span>
+        <span style="color: #000000;">world</span><span style="color: #800080;">.</span><span style="color: #000000;">executeCommand</span><span style="color: #800080;">(</span><span style="color: #A31515;">"title @a actionbar {\"text\":\""</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #000000;">lastSecond</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #A31515;">"\"}"</span><span style="color: #800080;">)</span>
+    <span style="color: #0000FF;">end</span>
+<span style="color: #0000FF;">end</span>
+<span style="color: #000000;">world</span><span style="color: #800080;">.</span><span style="color: #000000;">executeCommand</span><span style="color: #800080;">(</span><span style="color: #A31515;">"title @a title {\"text\":\"Go!\"}"</span><span style="color: #800080;">)</span></pre>
+    
+        <h3 style="margin-bottom: 0px;">Best Practices for MLS:</h3>
+        <ul style="margin-top: 0px;" class="api-field">
+            <li><b>Use descriptive thread names</b> when starting scripts via <span class="inline-code">/script run</span> to easily identify and manage running scripts.</li>
+            <li><b>Clean up after yourself</b> - if your script creates entities or blocks, consider removing them when the script stops.</li>
+            <li><b>Avoid high-frequency polling</b> of world state when possible, as this can impact server performance.</li>
+            <li><b>Use error handling</b> to gracefully handle issues in your scripts.</li>
+            <li><b>Plan for Script Termination</b> - since <span class="inline-code">/script stop</span> now immediately stops scripts, ensure your script includes proper cleanup logic to handle unexpected termination.</li>
+        </ul>
+
+        <h3 style="margin-bottom: 0px;">Limitations:</h3>
+        <ul style="margin-top: 0px;" class="api-field">
+            <li>Scripts run with operator (OP) permissions regardless of the permissions of the player who executed them.</li>
+            <li>Resource-intensive scripts may impact server performance.</li>
+            <li>Scripts cannot directly access the Minecraft code or modify the game's core behavior.</li>
+            <li>Each script runs in its own thread, which means global variables are not shared between scripts.</li>
+            <li>World operations are limited to the API methods provided; not all Minecraft features are accessible.</li>
+        </ul>
+    </section>
+
+    <section id="classes" class="section">
+        <h2>Classes</h2>
+        <p>Classes are regular Lua tables with a defined structure.</p>
+        <p>Below are all the classes and their fields.</p>
+
+        <h3 id="server" style="margin-bottom: 5px;"><a href="#server" style="color: #000080;">Server</a></h3>
+        <p style="margin-top: 5px; margin-bottom: 5px;">Represents the server in Minecraft.</p>
+        <h4 style="margin-top: 5px; margin-bottom: 5px;">Functions:</h4>
+        <ul style="margin-top: 0px;">
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">getWorld()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Retrieves the dimension world by its ID.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4>Arguments:</h4>
+                        <ul>
+                            <li><strong>dimensionID</strong> (<em>number</em>) - The ID of the dimension.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <p class="inline"><em><a href="#world">World</a></em> or <em>nil</em></p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <h3 id="world" style="margin-bottom: 5px;"><a href="#world" style="color: #000080;">World</a></h3>
+        <p style="margin-top: 5px; margin-bottom: 5px;">Represents the Minecraft dimension world.</p>
+        <h4 style="margin-top: 5px; margin-bottom: 5px;">Functions:</h4>
+        <ul style="margin-top: 0px;">
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">executeCommand()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Executes a command on the server.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4>Arguments:</h4>
+                        <ul>
+                            <li><strong>command</strong> (<em>string</em>) - The Minecraft command to execute (without the '/').</li>
+                            <li><strong>blockPos</strong> (<em><a href="#blockpos">BlockPos</a></em>, optional) - The position where the command will be executed (Default: 0, 0, 0).</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em class="inline">nil</em>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">createExplosion()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Creates an explosion in the world.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4>Arguments:</h4>
+                        <ul>
+                            <li><strong>blockPos</strong> (<em><a href="#blockpos">BlockPos</a></em>) - The world position where the explosion occurs.</li>
+                            <li><strong>strength</strong> (<em>number</em>, optional) - The strength of the explosion (Default: 4.0).</li>
+                            <li><strong>mode</strong> (<em>("break", "destroy", "none")</em>, optional) - Defines the explosion's effect on blocks:
+                                <ul>
+                                    <li><strong>"break"</strong> - Destroys blocks and drops loot.</li>
+                                    <li><strong>"destroy"</strong> - Destroys blocks without dropping loot.</li>
+                                    <li><strong>"none"</strong> - Only triggers the explosion effect, no block destruction.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em class="inline">nil</em>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">canBlockSeeSky()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Checks if the block has a clear line of sight to the sky.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4>Arguments:</h4>
+                        <ul>
+                            <li><strong>blockPos</strong> (<em><a href="#blockpos">BlockPos</a></em>) - The position of the block.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em class="inline">boolean</em>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">getSpawnPosition()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Retrieves the spawn position.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em class="inline"><a href="#blockpos">BlockPos</a></em>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">getCurrentTime()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Gets the current time in the world.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em class="inline">number</em>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">getWorldID()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Retrieves the world ID.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <p class="inline"><em>number</em> or <em>nil</em></p>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">getGameRuleValue()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Retrieves the value of a specified game rule.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4>Arguments:</h4>
+                        <ul>
+                            <li><strong>gameRule</strong> (<em>string</em>) - The name of the game rule whose value is being retrieved.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <p class="inline"><em>number</em>, <em>boolean</em>, <em>string</em>, or <em>nil</em></p>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">getMoonPhaseFactor()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Retrieves the current moon phase factor.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <p class="inline"><em>number</em></p>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">getRedstonePower()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Retrieves the redstone power level of a given block.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4>Arguments:</h4>
+                        <ul>
+                            <li><strong>blockPos</strong> (<em><a href="#blockpos">BlockPos</a></em>) - The position of the block for which the redstone power is being retrieved.</li>
+                            <li><strong>direction</strong> (<em>("up", "down", "north", "south", "east", "west")</em>, optional) - The direction of the redstone signal. If not specified, the maximum power will be returned.
+                                <ul>
+                                    <li><strong>"up"</strong> - The upward side of the block.</li>
+                                    <li><strong>"down"</strong> - The downward side of the block.</li>
+                                    <li><strong>"north"</strong> - The northern side of the block.</li>
+                                    <li><strong>"south"</strong> - The southern side of the block.</li>
+                                    <li><strong>"east"</strong> - The eastern side of the block.</li>
+                                    <li><strong>"west"</strong> - The western side of the block.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em class="inline">number</em>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">getRedstonePowerFromNeighbors()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Retrieves the redstone power level from neighboring blocks.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4>Arguments:</h4>
+                        <ul>
+                            <li><strong>blockPos</strong> (<em><a href="#blockpos">BlockPos</a></em>) - The position of the block from which redstone power will be retrieved.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em class="inline">number</em>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">isBlockPowered()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Checks if the specified block is powered.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4>Arguments:</h4>
+                        <ul>
+                            <li><strong>blockPos</strong> (<em><a href="#blockpos">BlockPos</a></em>) - The coordinates of the block to check.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em class="inline">boolean</em>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">getLight()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Retrieves the light level at the specified block position.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4>Arguments:</h4>
+                        <ul>
+                            <li><strong>blockPos</strong> (<em><a href="#blockpos">BlockPos</a></em>) - The coordinates of the block to check.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em class="inline">number</em>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">isBlockAir()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Checks if the specified block is air.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4>Arguments:</h4>
+                        <ul>
+                            <li><strong>blockPos</strong> (<em><a href="#blockpos">BlockPos</a></em>) - The coordinates of the block to check.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em class="inline">boolean</em>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">isDaytime()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Determines whether it is currently daytime in the world.</p>
+                </div>
+                <div class="api-function-desc"> 
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em class="inline">boolean</em>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">getDifficulty()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Gets the current difficulty level of the game.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em class="inline">string</em>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">isRaining()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Checks if it is currently raining in the world.</p>
+                </div>
+                <div class="api-function-desc"> 
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em class="inline">boolean</em>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">isThundering()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Determines whether there is a thunderstorm in the world.</p>
+                </div>
+                <div class="api-function-desc"> 
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em class="inline">boolean</em>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">getPlayersCountOnServer()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Retrieves the total number of players currently connected to the server.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em class="inline">number</em>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">getPlayersCountInWorld()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Retrieves the number of players currently present in the world.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em class="inline">number</em>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">getPlayers()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Gets a list of all players in the current context.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em class="inline">table{&lt;<a href="#player">Player</a>&gt;}</em>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">getEntitiesInSquare()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Retrieves a list of all entities within the specified square area.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4>Arguments:</h4>
+                        <ul>
+                            <li><strong>blockPos1</strong> (<em><a href="#blockpos">BlockPos</a></em>) - The coordinates of one corner of the square.</li>
+                            <li><strong>blockPos2</strong> (<em><a href="#blockpos">BlockPos</a></em>) - The coordinates of the opposite corner of the square.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em class="inline">table{&lt;<a href="#entity">Entity</a>&gt;}</em>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">getPlayersInSquare()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Retrieves a list of all players within the specified square area.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4>Arguments:</h4>
+                        <ul>
+                            <li><strong>blockPos1</strong> (<em><a href="#blockpos">BlockPos</a></em>) - The coordinates of one corner of the square.</li>
+                            <li><strong>blockPos2</strong> (<em><a href="#blockpos">BlockPos</a></em>) - The coordinates of the opposite corner of the square.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em class="inline">table{&lt;<a href="#player">Player</a>&gt;}</em>
+                    </div>
+                </div>
+            </li>            
+        </ul>
+        <h4 style="margin-top: 5px; margin-bottom: 5px;">Example:</h4>
+
+        <h3 id="blockpos" style="margin-bottom: 5px;"><a href="#blockpos" style="color: #000080;">BlockPos</a></h3>
+        <p style="margin-top: 5px; margin-bottom: 5px;">Represents the position of a block in the world.</p>
+        <h4 style="margin-top: 5px; margin-bottom: 5px;">Fields:</h4>
+        <ul style="margin-top: 0px;" class="api-field">
+            <li><strong>x</strong> (<em>number</em>) - The x-coordinate of the block's position.</li>
+            <li><strong>y</strong> (<em>number</em>) - The y-coordinate of the block's position.</li>
+            <li><strong>z</strong> (<em>number</em>) - The z-coordinate of the block's position.</li>
+        </ul>
+
+        <h3 id="entity" style="margin-bottom: 5px;"><a href="#entity" style="color: #000080;">Entity</a></h3>
+        <p style="margin-top: 5px; margin-bottom: 5px;">Represents an entity in the game.</p>
+        <h4 style="margin-top: 5px; margin-bottom: 5px;">Functions:</h4>
+        <ul style="margin-top: 0px;">
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">getDisplayName()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Retrieves the display name of the entity.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em>string</em>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">getId()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Retrieves the unique UUID of the entity.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em>string</em>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">getPosition()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Gets the current position of the entity in the world.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em class="inline"><a href="#blockpos">BlockPos</a></em>
+                    </div>
+                </div>
+            </li>
+            <li class="api-function">
+                <div>
+                    <h3 class="inline">getLookingBlockPosition()</h3>
+                    <p class="inline" style="font-size: 16px;"> - Determines the position of the block the entity is currently looking at.</p>
+                </div>
+                <div class="api-function-desc">
+                    <div>
+                        <h4>Arguments:</h4>
+                        <ul>
+                            <li><strong>distance</strong> (<em>number</em>, optional) - The maximum distance to check for the block being looked at. Defaults to 512 if not specified.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="inline">Returns:</h4>
+                        <em><a href="#blockpos">BlockPos</a></em>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <h3 id="player" style="margin-bottom: 5px;"><a href="#player" style="color: #000080;">Player</a> extends <a href="#entity" style="color: #000080;">Entity</a></h3>
+        <p style="margin-top: 5px; margin-bottom: 5px;">Represents a player in the game.</p>
+    </section>
+
+    <section id="examples" class="section">
+        <h2>Examples</h2>
+        <h3>Weather Control System</h3>
+        <pre style="background-color: #f8f8f8; padding: 10px; border-radius: 5px;"><span style="color: #008000;">-- weather_cycle.lua</span>
+<span style="color: #008000;">-- Cycles through different weather conditions</span>
+
+<span style="color: #0000FF;">while</span> <span style="color: #0000FF;">true</span> <span style="color: #0000FF;">do</span>
+    <span style="color: #000000;">world</span><span style="color: #800080;">.</span><span style="color: #000000;">executeCommand</span><span style="color: #800080;">(</span><span style="color: #A31515;">"weather clear"</span><span style="color: #800080;">)</span>
+    <span style="color: #000000;">print</span><span style="color: #800080;">(</span><span style="color: #A31515;">"Weather set to clear"</span><span style="color: #800080;">)</span>
+    
+    <span style="color: #0000FF;">local</span> <span style="color: #000000;">endTime</span> <span style="color: #800080;">=</span> <span style="color: #000000;">os</span><span style="color: #800080;">.</span><span style="color: #000000;">time</span><span style="color: #800080;">(</span><span style="color: #800080;">)</span> <span style="color: #800080;">+</span> <span style="color: #098658;">30</span>
+    <span style="color: #0000FF;">while</span> <span style="color: #000000;">os</span><span style="color: #800080;">.</span><span style="color: #000000;">time</span><span style="color: #800080;">(</span><span style="color: #800080;">)</span> <span style="color: #800080;">&lt;</span> <span style="color: #000000;">endTime</span> <span style="color: #0000FF;">do</span> <span style="color: #0000FF;">end</span>
+    
+    <span style="color: #000000;">world</span><span style="color: #800080;">.</span><span style="color: #000000;">executeCommand</span><span style="color: #800080;">(</span><span style="color: #A31515;">"weather rain"</span><span style="color: #800080;">)</span>
+    <span style="color: #000000;">print</span><span style="color: #800080;">(</span><span style="color: #A31515;">"Weather set to rain"</span><span style="color: #800080;">)</span>
+    
+    <span style="color: #000000;">endTime</span> <span style="color: #800080;">=</span> <span style="color: #000000;">os</span><span style="color: #800080;">.</span><span style="color: #000000;">time</span><span style="color: #800080;">(</span><span style="color: #800080;">)</span> <span style="color: #800080;">+</span> <span style="color: #098658;">30</span>
+    <span style="color: #0000FF;">while</span> <span style="color: #000000;">os</span><span style="color: #800080;">.</span><span style="color: #000000;">time</span><span style="color: #800080;">(</span><span style="color: #800080;">)</span> <span style="color: #800080;">&lt;</span> <span style="color: #000000;">endTime</span> <span style="color: #0000FF;">do</span> <span style="color: #0000FF;">end</span>
+    
+    <span style="color: #000000;">world</span><span style="color: #800080;">.</span><span style="color: #000000;">executeCommand</span><span style="color: #800080;">(</span><span style="color: #A31515;">"weather thunder"</span><span style="color: #800080;">)</span>
+    <span style="color: #000000;">print</span><span style="color: #800080;">(</span><span style="color: #A31515;">"Weather set to thunder"</span><span style="color: #800080;">)</span>
+    
+    <span style="color: #000000;">endTime</span> <span style="color: #800080;">=</span> <span style="color: #000000;">os</span><span style="color: #800080;">.</span><span style="color: #000000;">time</span><span style="color: #800080;">(</span><span style="color: #800080;">)</span> <span style="color: #800080;">+</span> <span style="color: #098658;">30</span>
+    <span style="color: #0000FF;">while</span> <span style="color: #000000;">os</span><span style="color: #800080;">.</span><span style="color: #000000;">time</span><span style="color: #800080;">(</span><span style="color: #800080;">)</span> <span style="color: #800080;">&lt;</span> <span style="color: #000000;">endTime</span> <span style="color: #0000FF;">do</span> <span style="color: #0000FF;">end</span>
+<span style="color: #0000FF;">end</span></pre>
+        <h3>Player Detection System</h3>
+        <pre style="background-color: #f8f8f8; padding: 10px; border-radius: 5px;"><span style="color: #008000;">-- player_detector.lua</span>
+<span style="color: #008000;">-- Detects players in a specific area and triggers actions</span>
+
+<span style="color: #0000FF;">local</span> <span style="color: #000000;">corner1</span> <span style="color: #800080;">=</span> <span style="color: #800080;">{</span><span style="color: #000000;">x</span> <span style="color: #800080;">=</span> <span style="color: #098658;">100</span><span style="color: #800080;">,</span> <span style="color: #000000;">y</span> <span style="color: #800080;">=</span> <span style="color: #098658;">64</span><span style="color: #800080;">,</span> <span style="color: #000000;">z</span> <span style="color: #800080;">=</span> <span style="color: #098658;">100</span><span style="color: #800080;">}</span>
+<span style="color: #0000FF;">local</span> <span style="color: #000000;">corner2</span> <span style="color: #800080;">=</span> <span style="color: #800080;">{</span><span style="color: #000000;">x</span> <span style="color: #800080;">=</span> <span style="color: #098658;">120</span><span style="color: #800080;">,</span> <span style="color: #000000;">y</span> <span style="color: #800080;">=</span> <span style="color: #098658;">70</span><span style="color: #800080;">,</span> <span style="color: #000000;">z</span> <span style="color: #800080;">=</span> <span style="color: #098658;">120</span><span style="color: #800080;">}</span>
+
+<span style="color: #0000FF;">while</span> <span style="color: #0000FF;">true</span> <span style="color: #0000FF;">do</span>
+    <span style="color: #0000FF;">local</span> <span style="color: #000000;">players</span> <span style="color: #800080;">=</span> <span style="color: #000000;">world</span><span style="color: #800080;">.</span><span style="color: #000000;">getPlayersInSquare</span><span style="color: #800080;">(</span><span style="color: #000000;">corner1</span><span style="color: #800080;">,</span> <span style="color: #000000;">corner2</span><span style="color: #800080;">)</span>
+    
+    <span style="color: #0000FF;">if</span> <span style="color: #800080;">#</span><span style="color: #000000;">players</span> <span style="color: #800080;">&gt;</span> <span style="color: #098658;">0</span> <span style="color: #0000FF;">then</span>
+        <span style="color: #000000;">world</span><span style="color: #800080;">.</span><span style="color: #000000;">executeCommand</span><span style="color: #800080;">(</span><span style="color: #A31515;">"setblock 110 65 110 redstone_block"</span><span style="color: #800080;">)</span>
+        <span style="color: #000000;">print</span><span style="color: #800080;">(</span><span style="color: #A31515;">"Players detected: "</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #800080;">#</span><span style="color: #000000;">players</span><span style="color: #800080;">)</span>
+    <span style="color: #0000FF;">else</span>
+        <span style="color: #000000;">world</span><span style="color: #800080;">.</span><span style="color: #000000;">executeCommand</span><span style="color: #800080;">(</span><span style="color: #A31515;">"setblock 110 65 110 air"</span><span style="color: #800080;">)</span>
+        <span style="color: #000000;">print</span><span style="color: #800080;">(</span><span style="color: #A31515;">"No players detected"</span><span style="color: #800080;">)</span>
+    <span style="color: #0000FF;">end</span>
+    
+    <span style="color: #008000;">-- Check every second</span>
+    <span style="color: #0000FF;">local</span> <span style="color: #000000;">endTime</span> <span style="color: #800080;">=</span> <span style="color: #000000;">os</span><span style="color: #800080;">.</span><span style="color: #000000;">time</span><span style="color: #800080;">(</span><span style="color: #800080;">)</span> <span style="color: #800080;">+</span> <span style="color: #098658;">1</span>
+    <span style="color: #0000FF;">while</span> <span style="color: #000000;">os</span><span style="color: #800080;">.</span><span style="color: #000000;">time</span><span style="color: #800080;">(</span><span style="color: #800080;">)</span> <span style="color: #800080;">&lt;</span> <span style="color: #000000;">endTime</span> <span style="color: #0000FF;">do</span> <span style="color: #0000FF;">end</span>
+<span style="color: #0000FF;">end</span></pre>
+        <h3>Advanced Redstone Logic</h3>
+        <pre style="background-color: #f8f8f8; padding: 10px; border-radius: 5px;"><span style="color: #008000;">-- redstone_monitor.lua</span>
+<span style="color: #008000;">-- Monitors redstone power at a specific position and responds</span>
+
+<span style="color: #0000FF;">local</span> <span style="color: #000000;">monitorPos</span> <span style="color: #800080;">=</span> <span style="color: #800080;">{</span><span style="color: #000000;">x</span> <span style="color: #800080;">=</span> <span style="color: #098658;">100</span><span style="color: #800080;">,</span> <span style="color: #000000;">y</span> <span style="color: #800080;">=</span> <span style="color: #098658;">64</span><span style="color: #800080;">,</span> <span style="color: #000000;">z</span> <span style="color: #800080;">=</span> <span style="color: #098658;">100</span><span style="color: #800080;">}</span>
+<span style="color: #0000FF;">local</span> <span style="color: #000000;">outputPos</span> <span style="color: #800080;">=</span> <span style="color: #800080;">{</span><span style="color: #000000;">x</span> <span style="color: #800080;">=</span> <span style="color: #098658;">102</span><span style="color: #800080;">,</span> <span style="color: #000000;">y</span> <span style="color: #800080;">=</span> <span style="color: #098658;">64</span><span style="color: #800080;">,</span> <span style="color: #000000;">z</span> <span style="color: #800080;">=</span> <span style="color: #098658;">100</span><span style="color: #800080;">}</span>
+
+<span style="color: #0000FF;">while</span> <span style="color: #0000FF;">true</span> <span style="color: #0000FF;">do</span>
+    <span style="color: #0000FF;">local</span> <span style="color: #000000;">power</span> <span style="color: #800080;">=</span> <span style="color: #000000;">world</span><span style="color: #800080;">.</span><span style="color: #000000;">getRedstonePower</span><span style="color: #800080;">(</span><span style="color: #000000;">monitorPos</span><span style="color: #800080;">)</span>
+    
+    <span style="color: #0000FF;">if</span> <span style="color: #000000;">power</span> <span style="color: #800080;">&gt;</span> <span style="color: #098658;">0</span> <span style="color: #0000FF;">then</span>
+        <span style="color: #0000FF;">local</span> <span style="color: #000000;">command</span> <span style="color: #800080;">=</span> <span style="color: #A31515;">"say Redstone level: "</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #000000;">power</span>
+        <span style="color: #000000;">world</span><span style="color: #800080;">.</span><span style="color: #000000;">executeCommand</span><span style="color: #800080;">(</span><span style="color: #000000;">command</span><span style="color: #800080;">)</span>
+        
+        <span style="color: #008000;">-- Create different strength signals based on input</span>
+        <span style="color: #0000FF;">if</span> <span style="color: #000000;">power</span> <span style="color: #800080;">&gt;</span> <span style="color: #098658;">10</span> <span style="color: #0000FF;">then</span>
+            <span style="color: #000000;">world</span><span style="color: #800080;">.</span><span style="color: #000000;">executeCommand</span><span style="color: #800080;">(</span><span style="color: #A31515;">"setblock "</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #000000;">outputPos</span><span style="color: #800080;">.</span><span style="color: #000000;">x</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #A31515;">" "</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #000000;">outputPos</span><span style="color: #800080;">.</span><span style="color: #000000;">y</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #A31515;">" "</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #000000;">outputPos</span><span style="color: #800080;">.</span><span style="color: #000000;">z</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #A31515;">" redstone_block"</span><span style="color: #800080;">)</span>
+        <span style="color: #0000FF;">else</span>
+            <span style="color: #000000;">world</span><span style="color: #800080;">.</span><span style="color: #000000;">executeCommand</span><span style="color: #800080;">(</span><span style="color: #A31515;">"setblock "</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #000000;">outputPos</span><span style="color: #800080;">.</span><span style="color: #000000;">x</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #A31515;">" "</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #000000;">outputPos</span><span style="color: #800080;">.</span><span style="color: #000000;">y</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #A31515;">" "</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #000000;">outputPos</span><span style="color: #800080;">.</span><span style="color: #000000;">z</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #A31515;">" redstone_torch"</span><span style="color: #800080;">)</span>
+        <span style="color: #0000FF;">end</span>
+    <span style="color: #0000FF;">else</span>
+        <span style="color: #000000;">world</span><span style="color: #800080;">.</span><span style="color: #000000;">executeCommand</span><span style="color: #800080;">(</span><span style="color: #A31515;">"setblock "</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #000000;">outputPos</span><span style="color: #800080;">.</span><span style="color: #000000;">x</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #A31515;">" "</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #000000;">outputPos</span><span style="color: #800080;">.</span><span style="color: #000000;">y</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #A31515;">" "</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #000000;">outputPos</span><span style="color: #800080;">.</span><span style="color: #000000;">z</span> <span style="color: #800080;">.</span><span style="color: #800080;">.</span> <span style="color: #A31515;">" air"</span><span style="color: #800080;">)</span>
+    <span style="color: #0000FF;">end</span>
+    
+    <span style="color: #008000;">-- Check every half second</span>
+    <span style="color: #0000FF;">local</span> <span style="color: #000000;">endTime</span> <span style="color: #800080;">=</span> <span style="color: #000000;">os</span><span style="color: #800080;">.</span><span style="color: #000000;">time</span><span style="color: #800080;">(</span><span style="color: #800080;">)</span> <span style="color: #800080;">+</span> <span style="color: #098658;">0.5</span>
+    <span style="color: #0000FF;">while</span> <span style="color: #000000;">os</span><span style="color: #800080;">.</span><span style="color: #000000;">time</span><span style="color: #800080;">(</span><span style="color: #800080;">)</span> <span style="color: #800080;">&lt;</span> <span style="color: #000000;">endTime</span> <span style="color: #0000FF;">do</span> <span style="color: #0000FF;">end</span>
+<span style="color: #0000FF;">end</span></pre>
+    </section>
+</main>
+
+<footer>
+    <p>© 2025 Artem Raskin. All rights reserved.</p>
+    <p>This project is licensed under the MIT License. See the <a href="https://github.com/TKRArtem/MLS_MinecraftLuaScripts/blob/main/LICENSE" target="_blank">LICENSE</a> file for more information.</p>
+</footer>
+
+</body>
+</html>
